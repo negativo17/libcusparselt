@@ -4,15 +4,15 @@
 %global         _build_id_links none
 
 Name:           libcusparselt
-Version:        0.2.0.1
-Release:        2%{?dist}
+Version:        0.3.0.3
+Release:        1%{?dist}
 Summary:        CUDA Library for Sparse Matrix-Matrix Multiplication
 License:        NVIDIA License
 URL:            https://docs.nvidia.com/cuda/cusparselt/index.html
 ExclusiveArch:  x86_64 aarch64
 
-Source0:        https://developer.download.nvidia.com/compute/libcusparse-lt/0.2.0/local_installers/libcusparse_lt-linux-x86_64-%{version}.tar.gz
-Source1:        https://developer.download.nvidia.com/compute/libcusparse-lt/0.2.0/local_installers/libcusparse_lt-linux-sbsa-%{version}.tar.gz
+Source0:        https://developer.download.nvidia.com/compute/cusparselt/redist/libcusparse-lt/linux-x86_64/libcusparse_lt-linux-x86_64-%{version}-archive.tar.xz
+Source1:        https://developer.download.nvidia.com/compute/cusparselt/redist/libcusparse-lt/linux-sbsa/libcusparse_lt-linux-sbsa-%{version}-archive.tar.xz
 
 Conflicts:      %{name}0 < %{?epoch:%{epoch}:}%{version}-%{release}
 # Drop in next release:
@@ -52,11 +52,11 @@ Static libraries for cuSPARSELt.
 
 %prep
 %ifarch x86_64
-%setup -q -n libcusparse_lt
+%setup -q -n libcusparse_lt-linux-x86_64-%{version}-archive
 %endif
 
 %ifarch aarch64
-%setup -q -T -b 1 -n libcusparse_lt
+%setup -q -T -b 1 -n libcusparse_lt-linux-sbsa-%{version}-archive
 %endif
 
 %build
@@ -66,14 +66,14 @@ Static libraries for cuSPARSELt.
 mkdir -p %{buildroot}%{_libdir}/
 mkdir -p %{buildroot}%{_includedir}/cuda/
 
-install -p -m0755 lib64/libcusparseLt.so* %{buildroot}%{_libdir}/
-install -p -m0644 lib64/libcusparseLt_static.a %{buildroot}%{_libdir}/
+install -p -m0755 lib/libcusparseLt.so* %{buildroot}%{_libdir}/
+install -p -m0644 lib/libcusparseLt_static.a %{buildroot}%{_libdir}/
 install -p -m0644 include/cusparseLt.h %{buildroot}%{_includedir}/
 
 %ldconfig_scriptlets
 
 %files
-%license LICENSE.txt
+%license LICENSE
 %{_libdir}/libcusparseLt.so.*
 
 %files devel
@@ -84,6 +84,9 @@ install -p -m0644 include/cusparseLt.h %{buildroot}%{_includedir}/
 %{_libdir}/libcusparseLt_static.a
 
 %changelog
+* Fri Nov 11 2022 Simone Caronni <negativo17@gmail.com> - 0.3.0.3-1
+- Update to 0.3.0.3.
+
 * Wed Feb 02 2022 Simone Caronni <negativo17@gmail.com> - 0.2.0.1-2
 - Rename to libcusparselt.
 

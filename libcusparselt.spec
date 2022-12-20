@@ -11,6 +11,7 @@ License:        NVIDIA License
 URL:            https://docs.nvidia.com/cuda/cusparselt/index.html
 ExclusiveArch:  x86_64 aarch64
 
+# https://developer.nvidia.com/cusparselt/downloads
 Source0:        https://developer.download.nvidia.com/compute/cusparselt/redist/libcusparse-lt/linux-x86_64/libcusparse_lt-linux-x86_64-%{version}-archive.tar.xz
 Source1:        https://developer.download.nvidia.com/compute/cusparselt/redist/libcusparse-lt/linux-sbsa/libcusparse_lt-linux-sbsa-%{version}-archive.tar.xz
 

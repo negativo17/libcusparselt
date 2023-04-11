@@ -5,7 +5,7 @@
 
 Name:           libcusparselt
 Version:        0.3.0.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        CUDA Library for Sparse Matrix-Matrix Multiplication
 License:        NVIDIA License
 URL:            https://docs.nvidia.com/cuda/cusparselt/index.html
@@ -16,9 +16,6 @@ Source0:        https://developer.download.nvidia.com/compute/cusparselt/redist/
 Source1:        https://developer.download.nvidia.com/compute/cusparselt/redist/libcusparse-lt/linux-sbsa/libcusparse_lt-linux-sbsa-%{version}-archive.tar.xz
 
 Conflicts:      %{name}0 < %{?epoch:%{epoch}:}%{version}-%{release}
-# Drop in next release:
-Provides:       cuda-cusparselt = %{?epoch:%{epoch}:}%{version}-%{release}
-Obsoletes:      cuda-cusparselt < %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description
 NVIDIA cuSPARSELt is a high-performance CUDA library dedicated to general
@@ -33,9 +30,6 @@ Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 Requires:       cuda-devel%{?_isa}
 Conflicts:      %{name}-devel < %{?epoch:%{epoch}:}%{version}-%{release}
-# Drop in next release:
-Provides:       cuda-cusparselt-devel = %{?epoch:%{epoch}:}%{version}-%{release}
-Obsoletes:      cuda-cusparselt-devel < %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for developing
@@ -44,9 +38,6 @@ applications that use cuSPARSELt.
 %package        static
 Summary:        Static libraries for %{name}
 Requires:       %{name}-devel%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
-# Drop in next release:
-Provides:       cuda-cusparselt-static = %{?epoch:%{epoch}:}%{version}-%{release}
-Obsoletes:      cuda-cusparselt-static < %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description    static
 Static libraries for cuSPARSELt.
@@ -65,13 +56,14 @@ Static libraries for cuSPARSELt.
 
 %install
 mkdir -p %{buildroot}%{_libdir}/
-mkdir -p %{buildroot}%{_includedir}/cuda/
-
-install -p -m0755 lib/libcusparseLt.so* %{buildroot}%{_libdir}/
+cp -a lib/libcusparseLt.so* %{buildroot}%{_libdir}/
+chmod 755 %{buildroot}%{_libdir}/*.so*
 install -p -m0644 lib/libcusparseLt_static.a %{buildroot}%{_libdir}/
+
+mkdir -p %{buildroot}%{_includedir}/
 install -p -m0644 include/cusparseLt.h %{buildroot}%{_includedir}/
 
-%ldconfig_scriptlets
+%{?ldconfig_scriptlets}
 
 %files
 %license LICENSE
@@ -85,6 +77,10 @@ install -p -m0644 include/cusparseLt.h %{buildroot}%{_includedir}/
 %{_libdir}/libcusparseLt_static.a
 
 %changelog
+* Tue Apr 11 2023 Simone Caronni <negativo17@gmail.com> - 0.3.0.3-2
+- Fix symlinks.
+- Update SPEC file.
+
 * Fri Nov 11 2022 Simone Caronni <negativo17@gmail.com> - 0.3.0.3-1
 - Update to 0.3.0.3.
 

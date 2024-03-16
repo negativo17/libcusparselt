@@ -4,14 +4,13 @@
 %global         _build_id_links none
 
 Name:           libcusparselt
-Version:        0.5.2.1
+Version:        0.6.0.6
 Release:        1%{?dist}
 Summary:        CUDA Library for Sparse Matrix-Matrix Multiplication
 License:        NVIDIA License
 URL:            https://docs.nvidia.com/cuda/cusparselt/index.html
 ExclusiveArch:  x86_64 aarch64
 
-# https://developer.nvidia.com/cusparselt/downloads
 Source0:        https://developer.download.nvidia.com/compute/cusparselt/redist/libcusparse_lt/linux-x86_64/libcusparse_lt-linux-x86_64-%{version}-archive.tar.xz
 Source1:        https://developer.download.nvidia.com/compute/cusparselt/redist/libcusparse_lt/linux-sbsa/libcusparse_lt-linux-sbsa-%{version}-archive.tar.xz
 
@@ -77,6 +76,9 @@ install -p -m0644 include/cusparseLt.h %{buildroot}%{_includedir}/
 %{_libdir}/libcusparseLt_static.a
 
 %changelog
+* Sat Mar 16 2024 Simone Caronni <negativo17@gmail.com> - 0.6.0.6-1
+- Update to 0.6.0.6.
+
 * Sat Jan 06 2024 Simone Caronni <negativo17@gmail.com> - 0.5.2.1-1
 - Update to 0.5.2.1.
 
